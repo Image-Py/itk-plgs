@@ -1,7 +1,6 @@
 itk-plgs   
 ======================
 
-
 **Introduction:** itk need not much introductions, It is a 2D/3D image segment library. ImagePy is a interactive image processing framework which can wrap any numpy based library esaily. And supporting multi-channels, imagestack, lookuptable, roi, macros recorder...It is a Plugin system(just like ImageJ but more convenient). This project is a wrapper of itk for ImagePy plugins!
 
 **Now It is just a start, I wrap little of itk's algrism, aimed to introduct how to wrote ImagePy plugin, The Demo in this document is representative.**
