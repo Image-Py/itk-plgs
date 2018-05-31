@@ -19,20 +19,20 @@ ReaderManager.add('dcm', read)
 WriterManager.add('dcm', write)
 class OpenDCM(fileio.Reader):
 	title = 'DICOM Open'
-	filt = ['DCM']
+	filt = ['dcm']
 
 class SaveDCM(fileio.Writer):
 	title = 'DICOM Save'
-	filt = ['DCM']
+	filt = ['dcm']
 
-ReaderManager.add('nii', (readall,))
-WriterManager.add('nii', (write,))
+ReaderManager.add('nii', readall, tag='imgs')
+WriterManager.add('nii', write, tag='imgs')
 class OpenNII(fileio.Reader):
 	title = 'NII Open'
-	filt = ['NII']
+	filt = ['nii']
 
-class SaveNII(fileio.Reader):
+class SaveNII(fileio.Writer):
 	title = 'NII Save'
-	filt = ['NII']
+	filt = ['nii']
 
 plgs = [OpenDCM, SaveDCM, '-', OpenNII, SaveNII]
