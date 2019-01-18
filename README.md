@@ -1,6 +1,6 @@
 # itk-plgs 
 
-**Path:** https://github.com/Image-Py/IBook
+**Path:** https://github.com/Image-Py/itk-plgs
 
 **Version:** 0.1
 
