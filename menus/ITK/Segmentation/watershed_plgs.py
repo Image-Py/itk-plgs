@@ -11,15 +11,15 @@ class UPWatershed(Filter):
 	def load(self, ips):
 		minv, maxv = ips.range
 		self.para = {'thr1':minv, 'thr2':maxv}
-		self.view = [('slide', (minv, maxv), 4, 'Low', 'thr1'),
-			('slide', (minv,maxv), 4, 'High', 'thr2')]
+		self.view = [('slide', 'thr1', (minv, maxv), 4, 'Low'),
+			('slide', 'thr2', (minv,maxv), 4, 'High')]
 		self.buflut = ips.lut
 		ips.lut = ips.lut.copy()
 		return True
 
 	def cancel(self, ips):
 		ips.lut = self.buflut
-		ips.update = 'pix'
+		ips.update()
 
 	def preview(self, ips, para):
 		ips.lut[:] = self.buflut
@@ -28,7 +28,7 @@ class UPWatershed(Filter):
 		lim2 = (para['thr2']-minv)*255/(maxv-minv)
 		ips.lut[:int(lim1)] = [0,255,0]
 		ips.lut[int(lim2):] = [255,0,0]
-		ips.update = 'pix'
+		ips.update()
 
 	#process
 	def run(self, ips, snap, img, para = None):
@@ -48,14 +48,14 @@ class WatershedRoi(Filter):
 	note = ['8-bit', 'not_slice', 'auto_snap', 'req_roi']
 	
 	para = {'sigma':2}
-	view = [(int, (0,10), 0,  'sigma', 'sigma', 'pix')]
+	view = [(int, 'sigma', (0,10), 0,  'sigma', 'pix')]
 	
 	def run(self, ips, snap, img, para = None):
 		itkimg = sitk.GetImageFromArray(img)
 		itkimg = sitk.DiscreteGaussian(itkimg, para['sigma'])
 		itkimg = sitk.GradientMagnitude(itkimg)
 		itkmarker = sitk.GetImageFromArray(ips.get_msk().astype(np.uint16))
-		itkmarker = sitk.ConnectedComponent(itkmarker, fullyConnected=True)
+		itkmarker = sitk.ConnectedComponent(itkmarker)
 		lineimg = sitk.MorphologicalWatershedFromMarkers(itkimg, itkmarker, markWatershedLine=True)
 		labels = sitk.GetArrayFromImage(lineimg)
 		return np.where(labels==0, ips.range[1], 0)

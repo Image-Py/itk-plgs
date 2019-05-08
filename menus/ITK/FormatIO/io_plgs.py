@@ -27,12 +27,14 @@ class SaveDCM(fileio.Writer):
 
 ReaderManager.add('nii', readall, tag='imgs')
 WriterManager.add('nii', write, tag='imgs')
+ReaderManager.add('nii.gz', readall, tag='imgs')
+WriterManager.add('nii.gz', write, tag='imgs')
 class OpenNII(fileio.Reader):
 	title = 'NII Open'
-	filt = ['nii']
+	filt = ['nii', 'nii.gz']
 
 class SaveNII(fileio.Writer):
 	title = 'NII Save'
-	filt = ['nii']
+	filt = ['nii', 'nii.gz']
 
 plgs = [OpenDCM, SaveDCM, '-', OpenNII, SaveNII]

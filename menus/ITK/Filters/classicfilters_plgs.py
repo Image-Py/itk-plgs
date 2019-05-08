@@ -16,7 +16,7 @@ class DiscreteGaussian(Filter):
 	title = 'ITK Discrete Gaussian'
 	note = ['all', 'auto_msk', 'auto_snap', 'preview']
 	para = {'sigma':1.0}
-	view = [(float, (0,10), 1,  'sigma', 'sigma', 'pix')]
+	view = [(float, 'sigma', (0,10), 1,  'sigma', 'pix')]
 
 	def run(self, ips, snap, img, para = None):
 		itkimg = sitk.GetImageFromArray(snap)

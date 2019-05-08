@@ -11,8 +11,8 @@ class UPWatershed(Simple):
 	def load(self, ips):
 		minv, maxv = ips.range
 		self.para = {'thr1':minv, 'thr2':maxv}
-		self.view = [('slide', (minv, maxv), 4, 'Low', 'thr1'),
-			('slide', (minv,maxv), 4, 'High', 'thr2')]
+		self.view = [('slide', 'thr1', (minv, maxv), 4, 'Low'),
+			('slide', 'thr2', (minv,maxv), 4, 'High')]
 		self.buflut = ips.lut
 		ips.lut = ips.lut.copy()
 		return True

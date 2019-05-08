@@ -7,7 +7,7 @@ class DiscreteGaussian3D(Simple):
 	title = 'ITK Discrete Gaussian 3D'
 	note = ['all', 'stack3d']
 	para = {'sigma':1.0}
-	view = [(float, (0,10), 1,  'sigma', 'sigma', 'pix')]
+	view = [(float, 'sigma', (0,10), 1, 'sigma', 'pix')]
 
 	def run(self, ips, imgs, para = None):
 		itkimgs = sitk.GetImageFromArray(imgs)
