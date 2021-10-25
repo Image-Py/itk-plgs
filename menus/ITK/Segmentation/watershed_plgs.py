@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 import SimpleITK as sitk
-from imagepy.core.engine import Filter, Simple
+from sciapp.action import Filter, Simple
 import numpy as np
 
 class UPWatershed(Filter):
@@ -54,7 +54,7 @@ class WatershedRoi(Filter):
 		itkimg = sitk.GetImageFromArray(img)
 		itkimg = sitk.DiscreteGaussian(itkimg, para['sigma'])
 		itkimg = sitk.GradientMagnitude(itkimg)
-		itkmarker = sitk.GetImageFromArray(ips.get_msk().astype(np.uint16))
+		itkmarker = sitk.GetImageFromArray(ips.mask().astype(np.uint16))
 		itkmarker = sitk.ConnectedComponent(itkmarker)
 		lineimg = sitk.MorphologicalWatershedFromMarkers(itkimg, itkmarker, markWatershedLine=True)
 		labels = sitk.GetArrayFromImage(lineimg)

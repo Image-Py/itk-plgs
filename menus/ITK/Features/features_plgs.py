@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 import SimpleITK as sitk
-from imagepy.core.engine import Filter, Simple
+from sciapp.action import Filter, Simple
 import numpy as np
 
 class CannyMagnitude(Filter):

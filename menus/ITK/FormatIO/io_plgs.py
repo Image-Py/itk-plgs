@@ -1,5 +1,4 @@
-from imagepy.core.util import fileio
-from imagepy.core.manager import ReaderManager, WriterManager
+from sciapp.action import dataio
 import SimpleITK as sitk
 import numpy as np
 
@@ -15,39 +14,45 @@ def read(path):return readall(path)[0]
 def write(path, img):
 	sitk.WriteImage(sitk.GetImageFromArray(img), path)
 
-ReaderManager.add('dcm', read)
-WriterManager.add('dcm', write)
+dataio.ReaderManager.add('dcm', read, 'img')
+dataio.WriterManager.add('dcm', write, 'img')
 
-class OpenDCM(fileio.Reader):
+class OpenDCM(dataio.Reader):
 	title = 'DICOM Open'
+	tag = 'img'
 	filt = ['dcm']
 
-class SaveDCM(fileio.Writer):
+class SaveDCM(dataio.ImageWriter):
 	title = 'DICOM Save'
+	tag = 'img'
 	filt = ['dcm']
 
-ReaderManager.add('ima', read)
-WriterManager.add('ima', write)
+dataio.ReaderManager.add('ima', read, 'img')
+dataio.WriterManager.add('ima', write, 'img')
 
-class OpenIMA(fileio.Reader):
+class OpenIMA(dataio.Reader):
 	title = 'IMA Open'
+	tag = 'img'
 	filt = ['ima']
 
-class SaveIMA(fileio.Writer):
+class SaveIMA(dataio.ImageWriter):
 	title = 'IMA Save'
+	tag = 'img'
 	filt = ['ima']
 
-ReaderManager.add('nii', readall, tag='imgs')
-WriterManager.add('nii', write, tag='imgs')
-ReaderManager.add('nii.gz', readall, tag='imgs')
-WriterManager.add('nii.gz', write, tag='imgs')
+dataio.ReaderManager.add('nii', readall, 'imgs')
+dataio.WriterManager.add('nii', write, 'imgs')
+dataio.ReaderManager.add('nii.gz', readall, 'imgs')
+dataio.WriterManager.add('nii.gz', write, 'imgs')
 
-class OpenNII(fileio.Reader):
+class OpenNII(dataio.Reader):
 	title = 'NII Open'
+	tag = 'imgs'
 	filt = ['nii', 'nii.gz']
 
-class SaveNII(fileio.Writer):
+class SaveNII(dataio.ImageWriter):
 	title = 'NII Save'
+	tag = 'imgs'
 	filt = ['nii', 'nii.gz']
 
 plgs = [OpenDCM, SaveDCM, '-', OpenIMA, SaveIMA, '-', OpenNII, SaveNII]
